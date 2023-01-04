@@ -19,18 +19,15 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private toast: NgToastService) { }
 
   ngOnInit(): void {
-    const data = localStorage.getItem('WEA5.cartId') || '[]'
-    const cartId = JSON.parse(data)
+    const data = localStorage.getItem('WEA5.cart') || '[]'
 
-    this.cartService.getById('A98CF8AF-1A89-4282-B6DB-ACB2A7410EF5').subscribe(res => this.cart = res)
-
-    /*
-    if(data !== '') {
-      this.cartService.getById('A98CF8AF-1A89-4282-B6DB-ACB2A7410EF5').subscribe(res => this.cart = res)
+    if(data !== '[]') {
+      this.cart = JSON.parse(data)
     } else {
-      console.log("no cart Id in localStorage found")
+
+      //TODO: replace this -> actually just provide the empty cart
+      //this.cartService.getById('A98CF8AF-1A89-4282-B6DB-ACB2A7410EF5').subscribe(res => this.cart = res)
     }
-    */
 
   }
 
@@ -61,17 +58,26 @@ export class CartComponent implements OnInit {
       updatedItem.amount = amount
     }
 
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe(res => this.cart = res)
+    this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
+      this.cart = res
+      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+    })
   }
 
   removeItem($event: string) {
     this.cart.items = this.cart.items!.filter(element => element.product?.id != $event)
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe(res => this.cart = res)
+    this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
+      this.cart = res
+      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+    })
   }
 
   removeCoupon(code: string | undefined) {
     this.cart.coupons = this.cart.coupons!.filter(element => element.code != code)
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe(res => this.cart = res)
+    this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
+      this.cart = res
+      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+    })
   }
 
   applyCoupon(code: string) {
@@ -83,9 +89,9 @@ export class CartComponent implements OnInit {
     this.cart.coupons.push(newCoupon)
 
     this.cartService.updateCart(this.cart.id, this.cart).subscribe({
-      next:(response) => {
-        console.log('response received')
-        this.cart = response;
+      next:(res) => {
+        this.cart = res;
+        localStorage.setItem('WEA5.cart', JSON.stringify(this.cart))
       },
       error: (e) => {
         this.toast.error({detail: "Ooops something went wrong", summary:"Coupon cannot be added", duration: 5000})
