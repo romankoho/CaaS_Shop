@@ -1,0 +1,17 @@
+<div class="input-group ps-5"  [ngClass]="{ loading: isLoading }">
+  <div class="form-outline">
+    <input class="form-control" type="text" placeholder="Suche ..."
+           #searchTerm (keyup)="myKeyup.emit(searchTerm.value)">
+  </div>
+  <i class="bi bi-search"></i>
+
+  <div class="results transition" [ngClass]="{ visible: foundProducts?.length || 0 }">
+
+    <a href (click)="productSelected.emit(product); false" class="result"
+       *ngFor="let product of foundProducts">
+      <div class="content">
+        <div class="title" >{{ product.name }}</div>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+
+<div class="container">
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h5>Items in your cart ({{getItemsCount()}})</h5>
+          </div>
+          <div *ngFor="let item of cart.items" class="ibox-content">
+            <div class="wea5-cart-entry" (deleteItemEvent)="removeItem($event)" (amountChanged)="amountChanged($event.productId, $event.amount)" [cartId]="cart.id" [id]="item.id" [name]="item.product.name"
+                 [productId]="item.product.id" [amount]="item.amount" [price]="item.product.price" [totalItemPrice]="item.totalPrice" ></div>
+          </div>
+
+          <div class="ibox-content">
+            <h2>Coupons</h2>
+            <div *ngFor="let coupon of cart.coupons" class="table-responsive">
+              <table class="table shopping-cart-table">
+                <tbody>
+                <tr>
+                  <td class="align-middle w-50">
+                    <h3 class="text-info-emphasis">
+                      Code: {{coupon.code}}
+                    </h3>
+                  </td>
+
+                  <td class="align-middle w-25">
+                    <button (click)="removeCoupon(coupon?.code)" type="button" class="btn btn-link text-navy">Remove coupon</button>
+                  </td>
+
+                  <td class="align-middle w-25">
+                  <h4>
+                    {{coupon.value | currency:'EUR':"symbol"}}
+                  </h4>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <table class="table shopping-cart-table">
+              <tr>
+                <td class="align-middle w-75">
+                  <div class="form-outline flex-fill">
+                    <input #couponInput type="text" class="form-control" placeholder="Discount code"/>
+                  </div>
+                </td>
+
+                <td class="align-middle w-25">
+                    <button class="btn btn-primary" (click)="applyCoupon(couponInput.value)">Apply</button>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+
+          <div class="ibox-content">
+            <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h5>Cart Summary</h5>
+          </div>
+          <div class="ibox-content">
+                    <span>
+                        Total
+                    </span>
+            <h2 class="font-bold">
+              {{cart.totalPrice | currency:'EUR':"symbol"}}
+            </h2>
+
+            <hr>
+            <div class="m-t-sm">
+              <div class="btn-group">
+                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
