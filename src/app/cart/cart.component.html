@@ -39,6 +39,7 @@
             </div>
 
             <table class="table shopping-cart-table">
+              <tbody>
               <tr>
                 <td class="align-middle w-75">
                   <div class="form-outline flex-fill">
@@ -50,13 +51,17 @@
                     <button class="btn btn-primary" (click)="applyCoupon(couponInput.value)">Apply</button>
                 </td>
               </tr>
+
+              <tr>
+                <div>
+                  <button class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+                </div>
+              </tr>
+
+              </tbody>
             </table>
-
           </div>
 
-          <div class="ibox-content">
-            <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
-          </div>
         </div>
 
       </div>

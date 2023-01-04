@@ -39,8 +39,6 @@ export class CartService {
   }
 
   public getById(cartId: string): Observable<Cart> {
-    console.error("getbyId called")
-
     const header = new HttpHeaders({
       'X-tenant-id': globals.tenantId,
       'Accept': 'application/json'
@@ -56,8 +54,8 @@ export class CartService {
       'Content-Type': 'application/json'
     })
 
-    return this.http.post<CartForUpdate>(`${environment.server}/cart/${cartId}`, this.mapCartToCartForUpdate(cart), {headers:header})
-      .pipe(map<any, Cart>(res => res), catchError(this.errorHandler))
+    return this.http.post<CartForUpdate>(`${environment.server}/cart/${cartId}`, this.mapCartToCartForUpdate(cart) , {headers:header})
+      .pipe(map<any, Cart>(res => res))
   }
 
 }

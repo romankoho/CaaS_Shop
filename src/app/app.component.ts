@@ -9,7 +9,4 @@ import {ProductMinimal} from "./models/product/productMinimal";
 export class AppComponent {
   title = 'CaaSShop1';
 
-  productSelected($event: ProductMinimal) {
-    //TODO: implement
-  }
 }

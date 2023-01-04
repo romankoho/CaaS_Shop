@@ -3,6 +3,7 @@ import {Cart} from "../models/cart/cart";
 import {CartService} from "../shared/cart.service";
 import {CartItemForUpdate} from "../models/cart/cart-item-for-update";
 import {Coupon} from "../models/coupon/coupon";
+import {NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'wea5-cart',
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit {
 
   cart: Cart = new Cart()
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private toast: NgToastService) { }
 
   ngOnInit(): void {
     const data = localStorage.getItem('WEA5.cartId') || '[]'
@@ -39,8 +40,6 @@ export class CartComponent implements OnInit {
   }
 
   public getItemsCount(): number {
-    console.log("getItemsCount called")
-
     let productCount:number = 0;
 
     if (this.cart.items == undefined) {
@@ -76,8 +75,21 @@ export class CartComponent implements OnInit {
   }
 
   applyCoupon(code: string) {
-    let newCoupon = new Coupon(code)
-    this.cart.coupons?.push(newCoupon)
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe(res => this.cart = res)
+    let newCoupon = new Coupon("", "", code)
+
+    //let cartClone = this.cart.copy();
+
+    //cartClone.id = "the cloned thingy"
+    this.cart.coupons.push(newCoupon)
+
+    this.cartService.updateCart(this.cart.id, this.cart).subscribe({
+      next:(response) => {
+        console.log('response received')
+        this.cart = response;
+      },
+      error: (e) => {
+        this.toast.error({detail: "Ooops something went wrong", summary:"Coupon cannot be added", duration: 5000})
+      }
+    });
   }
 }
