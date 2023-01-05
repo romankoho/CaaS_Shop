@@ -1,8 +1,6 @@
-export class ParsedPaginationToken {
-  constructor(
-    public direction: Direction = Direction.Forward,
-    public reference?: string
-  ) {  }
+export interface ParsedPaginationToken {
+    direction: Direction
+    reference?: string
 }
 
 export enum Direction {

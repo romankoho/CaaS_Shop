@@ -1,10 +1,8 @@
-export class CustomerForCreation {
-  constructor(
-    public id: string = "",
-    public firstName?: string,
-    public lastName?: string,
-    public eMail?: string,
-    public telephoneNumber?: string,
-    public creditCardNumber?: string
-  ) {  }
+export interface CustomerForCreation {
+   id: string
+   firstName?: string
+   lastName?: string
+   eMail?: string
+   telephoneNumber?: string
+   creditCardNumber?: string
 }

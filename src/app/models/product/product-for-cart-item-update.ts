@@ -1,6 +1,3 @@
-export class ProductForCartItemUpdate {
-  constructor(
-    public id: string = ""
-  ) {
-  }
+export interface ProductForCartItemUpdate {
+  id: string
 }

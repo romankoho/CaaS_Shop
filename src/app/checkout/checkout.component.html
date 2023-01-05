@@ -1,0 +1,151 @@
+<div class="row mt-3 bg-white pt-3 pb-3 rounded-3">
+  <div class="col-md-5 col-lg-4 order-md-last">
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between bg-primary">
+        <h2 class="text-white">Total (EUR)</h2>
+        <h2 class="text-white">{{cart.totalPrice | currency:'EUR':"symbol"}}</h2>
+      </li>
+    </ul>
+
+  </div>
+  <div class="col-md-7 col-lg-8">
+    <h4 class="mb-3">Billing address</h4>
+    <form [formGroup]="checkoutForm"
+          (ngSubmit)="submitForm()">
+
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label for="firstName" class="form-label">First name</label>
+          <input [ngClass]="{'border-warning': errors['firstName']}"
+            name="firstName"
+            formControlName="firstName"
+            type="text" class="form-control" id="firstName">
+          <div class="text-info-emphasis" *ngIf="errors['firstName']">
+            {{ errors['firstName'] }}
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="lastName" class="form-label">Last name</label>
+          <input [ngClass]="{'border-warning': errors['lastName']}"
+            name="lastName"
+            formControlName="lastName"
+            type="text" class="form-control" id="lastName">
+          <div class="text-info-emphasis" *ngIf="errors['lastName']">
+            {{ errors['lastName'] }}
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label for="email" class="form-label">Email</label>
+          <input [ngClass]="{'border-warning': errors['email']}"
+            name="email"
+            formControlName="email"
+            type="email" class="form-control" id="email" placeholder="you@example.com">
+          <div class="text-info-emphasis" *ngIf="errors['email']">
+            {{ errors['email'] }}
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label for="address" class="form-label">Address</label>
+          <input [ngClass]="{'border-warning': errors['address']}"
+            name="address"
+            formControlName="address"
+            type="text" class="form-control" id="address" placeholder="1234 Main St" >
+          <div class="text-info-emphasis" *ngIf="errors['address']">
+            {{ errors['address'] }}
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <label for="country" class="form-label">Country</label>
+          <input [ngClass]="{'border-warning': errors['country']}"
+            name="country"
+            formControlName="country"
+            type="text" class="form-control" id="country" placeholder="USA">
+          <div class="text-info-emphasis" *ngIf="errors['country']">
+            {{ errors['country'] }}
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="state" class="form-label">State</label>
+          <input [ngClass]="{'border-warning': errors['state']}"
+            name="state"
+            formControlName="state"
+            type="text" class="form-control" id="state" placeholder="Florida">
+          <div class="text-info-emphasis" *ngIf="errors['state']">
+            {{ errors['state'] }}
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="zip" class="form-label">Zip</label>
+          <input [ngClass]="{'border-warning': errors['zip']}"
+            name="zip"
+            formControlName="zip"
+            type="text" class="form-control" id="zip" placeholder="EF45 26">
+          <div class="text-info-emphasis" *ngIf="errors['zip']">
+            {{ errors['zip'] }}
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <h4 class="mb-3">Payment</h4>
+
+      <div class="row gy-3">
+        <div class="col-md-6">
+          <label for="cc-name" class="form-label">Name on card</label>
+          <input [ngClass]="{'border-warning': errors['ccName']}"
+            name="ccName"
+            formControlName="ccName"
+            type="text" class="form-control" id="cc-name" placeholder="">
+          <small class="text-muted">Full name as displayed on card</small>
+          <div class="text-info-emphasis" *ngIf="errors['ccName']">
+            {{ errors['ccName'] }}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="cc-number" class="form-label">Credit card number</label>
+          <input [ngClass]="{'border-warning': errors['ccNumber']}"
+            name="ccNumber"
+            formControlName="ccNumber"
+            type="text" class="form-control" id="cc-number" placeholder="">
+          <div class="text-info-emphasis" *ngIf="errors['ccNumber']">
+            {{ errors['ccNumber'] }}
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="cc-expiration" class="form-label">Expiration</label>
+          <input [ngClass]="{'border-warning': errors['ccExpiration']}"
+            name="ccExpiration"
+            formControlName="ccExpiration"
+            type="text" class="form-control" id="cc-expiration" placeholder="02/2023">
+          <div class="text-info-emphasis" *ngIf="errors['ccExpiration']">
+            {{ errors['ccExpiration'] }}
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="cc-cvv" class="form-label">CVV</label>
+          <input [ngClass]="{'border-warning': errors['ccCCV']}"
+            name="ccCCV"
+            formControlName="ccCCV"
+            type="text" class="form-control" id="cc-cvv" placeholder="">
+          <div class="text-info-emphasis" *ngIf="errors['ccCCV']">
+            {{ errors['ccCCV'] }}
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <button class="w-100 btn btn-primary btn-lg" [disabled]="checkoutForm.invalid" type="submit">Submit Order</button>
+    </form>
+  </div>
+</div>

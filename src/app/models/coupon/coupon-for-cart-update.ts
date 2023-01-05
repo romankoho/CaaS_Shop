@@ -1,5 +1,3 @@
-export class CouponForCartUpdate {
-  constructor(
-    public code?: string
-  ) {  }
+export interface CouponForCartUpdate {
+    code?: string
 }

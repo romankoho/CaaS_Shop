@@ -33,7 +33,18 @@ export class CartService {
       let item = cart.items.find(item => item.product.id == productId)
 
       if (item == undefined) {    //add new product to cart
-        let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
+        let addCartItem: CartItem = {
+          id: "",
+          shopId: "",
+          amount: 1,
+          cartId: "",
+          totalPrice: 0,
+          product: {
+            id: productId,
+            shopId: "",
+            price: 0
+          }
+        }
         cart.items.push(addCartItem)
       } else {                    //increase amount by 1
         item.amount++
@@ -42,12 +53,34 @@ export class CartService {
       return this.updateCart(cart.id, cart)
 
     } else {                    //create new cart
-      let cart: Cart = new Cart()
-      let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
-      cart.items.push(addCartItem)
-      let cartId = uuidv4();
+      let cart: Cart = {
+        basePrice: 0,
+        cartDiscounts: [],
+        coupons: [],
+        customer: {
+          id: "",
+          shopId: ""
+        },
+        discountValue: 0,
+        lastAccess: "",
+        id: uuidv4(),
+        shopId: "",
+        totalPrice: 0,
+        items: [{
+          id: "",
+          shopId: "",
+          amount: 1,
+          cartId: "",
+          totalPrice: 0,
+          product: {
+            id: productId,
+            shopId: "",
+            price: 0
+          }
+      }]
+    }
 
-      return this.updateCart(cartId, cart)
+      return this.updateCart(cart.id, cart)
     }
   }
 
@@ -57,15 +90,34 @@ export class CartService {
     let coupons:CouponForCartUpdate[] = []
 
     for(let i = 0; i < cart.items.length; i++) {
-      let product = new ProductForCartItemUpdate(cart.items[i].product.id)
-      cartItems.push(new CartItemForUpdate(product, cart.items[i].amount, cart.items[i].concurrencyToken))
+      let product: ProductForCartItemUpdate = {
+        id: cart.items[i].product.id
+      }
+
+      let cartItem: CartItemForUpdate = {
+        amount: cart.items[i].amount,
+        concurrencyToken: cart.items[i].concurrencyToken,
+        product: product
+      }
+
+      cartItems.push(cartItem)
     }
 
     for (const item of cart.coupons) {
-      coupons.push(new CouponForCartUpdate(item.code))
+      let coupon: CouponForCartUpdate =
+        {
+          code: item.code
+        }
+
+      coupons.push(coupon)
     }
 
-    return new CartForUpdate(undefined, cartItems, coupons, cart.concurrencyToken)
+      return {
+      customer: undefined,
+        items: cartItems,
+        coupons: coupons,
+        concurrencyToken: cart.concurrencyToken
+      }
   }
 
   public getById(cartId: string): Observable<Cart> {

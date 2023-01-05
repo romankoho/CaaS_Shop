@@ -4,6 +4,8 @@ import {CartService} from "../shared/cart.service";
 import {CartItemForUpdate} from "../models/cart/cart-item-for-update";
 import {Coupon} from "../models/coupon/coupon";
 import {NgToastService} from "ng-angular-popup";
+import {Router} from "@angular/router";
+import {CouponForCartUpdate} from "../models/coupon/coupon-for-cart-update";
 
 @Component({
   selector: 'wea5-cart',
@@ -14,21 +16,36 @@ import {NgToastService} from "ng-angular-popup";
 })
 export class CartComponent implements OnInit {
 
-  cart: Cart = new Cart()
+  cart: Cart
 
-  constructor(private cartService: CartService, private toast: NgToastService) { }
+  constructor(private cartService: CartService,
+              private router: Router,
+              private toast: NgToastService) { }
 
   ngOnInit(): void {
-    const data = localStorage.getItem('WEA5.cart') || '[]'
+    const data = localStorage.getItem('WEA5.cart')
 
-    if(data !== '[]') {
+    if(data) {
       this.cart = JSON.parse(data)
+    } else {
+      this.cart = {
+        basePrice: 0,
+        cartDiscounts: [],
+        concurrencyToken: "",
+        coupons: [],
+        customer: {
+          id: "",
+          shopId: ""
+        },
+        discountValue: 0,
+        id: "",
+        items: [],
+        lastAccess: "",
+        shopId: "",
+        totalPrice: 0
+
+      }
     }
-  }
-
-
-  checkout() {
-    console.log("checkout was pressed")
   }
 
   public getItemsCount(): number {
@@ -76,21 +93,29 @@ export class CartComponent implements OnInit {
   }
 
   applyCoupon(code: string) {
-    let newCoupon = new Coupon("", "", code)
+    let copyCart:Cart = {
+      ...this.cart,
+      coupons: [
+        ...this.cart.coupons,
+        { code: code } as Coupon
+      ]
+    }
 
-    //let cartClone = this.cart.copy();
-
-    //cartClone.id = "the cloned thingy"
-    this.cart.coupons.push(newCoupon)
-
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe({
+    this.cartService.updateCart(this.cart.id, copyCart).subscribe({
       next:(res) => {
         this.cart = res;
         localStorage.setItem('WEA5.cart', JSON.stringify(this.cart))
+        this.cart = res
       },
       error: (e) => {
         this.toast.error({detail: "Ooops something went wrong", summary:"Coupon cannot be added", duration: 5000})
       }
     });
+  }
+
+  navigateToCheckout() {
+    if(this.getItemsCount() > 0) {
+      this.router.navigateByUrl("/checkout");
+    }
   }
 }

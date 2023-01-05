@@ -4,10 +4,6 @@ import {ProductService} from "../shared/product.service";
 import {Direction} from "../models/base/parsed-pagination-token";
 import {NgToastService} from "ng-angular-popup";
 import {CartService} from "../shared/cart.service";
-import {Cart} from "../models/cart/cart";
-import {CartItem} from "../models/cart/cart-item";
-import {ProductMinimal} from "../models/product/productMinimal";
-import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'wea5-product-list',
@@ -17,7 +13,23 @@ import {v4 as uuidv4} from "uuid";
 })
 export class ProductListComponent implements OnInit {
 
-  pagedResult: ProductPagedResult = new ProductPagedResult()
+  pagedResult: ProductPagedResult = {
+    firstPage: {
+      direction: Direction.Forward
+    },
+    lastPage: {
+      direction: Direction.Forward
+    },
+    nextPage: {
+      direction: Direction.Forward
+    },
+    previousPage: {
+      direction: Direction.Forward
+    },
+    totalCount: 0,
+    totalPages: 0
+
+  }
   currentPage: number = 0
   searchTerm: string = ""
   disablePrevious: boolean = true
@@ -36,9 +48,10 @@ export class ProductListComponent implements OnInit {
         this.pagedResult = res
         if(this.pagedResult.items?.length == 0) {
           this.toast.error({detail: "So Much Empty", summary:"No Products Found", duration: 5000})
+        } else {
+          this.currentPage = 1
         }
 
-        this.currentPage = 1
         this.searchTerm = $event
 
         if(this.pagedResult.nextPage.reference != undefined) {
@@ -66,24 +79,10 @@ export class ProductListComponent implements OnInit {
       this.currentPage++
       this.disablePrevious = false
     })
-
   }
 
   addToCart(productId:string) {
-    const data = localStorage.getItem('WEA5.cart') || '[]'
-
-    if(data !== '[]') {           //existing cart
-      let cart:Cart = JSON.parse(data)
-      let item = cart.items.find(item => item.product.id == productId)
-
-      if (item == undefined) {    //add new product to cart
-        let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
-        cart.items.push(addCartItem)
-      } else {                    //increase amount by 1
-        item.amount++
-      }
-
-      this.cartService.updateCart(cart.id, cart).subscribe({
+      this.cartService.addToCart(productId).subscribe({
         next:(res) => {
           this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
           localStorage.setItem('WEA5.cart', JSON.stringify(res));
@@ -92,23 +91,6 @@ export class ProductListComponent implements OnInit {
           this.toast.error({detail: "Uuups", summary:"Something Went Wrong", duration: 5000})
         }
       })
-
-    } else {                    //create new cart
-      let cart: Cart = new Cart()
-      let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
-      cart.items.push(addCartItem)
-      let cartId = uuidv4();
-
-      this.cartService.updateCart(cartId, cart).subscribe({
-        next:(res) => {
-          this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
-          localStorage.setItem('WEA5.cart', JSON.stringify(res));
-        },
-        error:(e) => {
-          this.toast.error({detail: "Uuups", summary:"Something Went Wrong", duration: 5000})
-        }
-      })
-    }
   }
 
 }
