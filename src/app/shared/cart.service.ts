@@ -10,8 +10,11 @@ import {CartItemForUpdate} from "../models/cart/cart-item-for-update";
 import {CouponForCartUpdate} from "../models/coupon/coupon-for-cart-update";
 import {ProductForCartItemUpdate} from "../models/product/product-for-cart-item-update";
 import {CartItem} from "../models/cart/cart-item";
-import {ProductMinimal} from "../models/product/productMinimal";
 import {v4 as uuidv4} from "uuid";
+import {BillingAddress} from "../models/order/billingAddress";
+import {CustomerForCreation} from "../models/customer/customer-for-creation";
+import {Order} from "../models/order/order";
+import {OrderForCreation} from "../models/order/orderForCreation";
 
 @Injectable({
   providedIn: 'root'
@@ -120,24 +123,40 @@ export class CartService {
       }
   }
 
-  public getById(cartId: string): Observable<Cart> {
-    const header = new HttpHeaders({
+  private createHeader(): HttpHeaders {
+    let header = new HttpHeaders({
       'X-tenant-id': globals.tenantId,
       'Accept': 'application/json'
     })
+    return header
+  }
 
-    return this.http.get<Cart>(`${environment.server}/Cart/${cartId}`, {headers: header})
+  public getById(cartId: string): Observable<Cart> {
+    return this.http.get<Cart>(`${environment.server}/Cart/${cartId}`, {headers: this.createHeader()})
       .pipe(map<any, Cart>(res => res), catchError(this.errorHandler));
   }
 
   public updateCart(cartId: string, cart: Cart): Observable<Cart> {
-    const header = new HttpHeaders({
+    return this.http.post<CartForUpdate>(`${environment.server}/cart/${cartId}`, this.mapCartToCartForUpdate(cart) , {headers:this.createHeader()})
+      .pipe(map<any, Cart>(res => res))
+  }
+
+  public convertCartToOrder(cartId: string, billingAddress: BillingAddress, customer: CustomerForCreation): Observable<Order> {
+
+    let orderForUpdate: OrderForCreation = {
+      cartId: cartId,
+      billingAddress: billingAddress,
+      customer: customer
+    }
+
+    let header = new HttpHeaders({
       'X-tenant-id': globals.tenantId,
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     })
 
-    return this.http.post<CartForUpdate>(`${environment.server}/cart/${cartId}`, this.mapCartToCartForUpdate(cart) , {headers:header})
-      .pipe(map<any, Cart>(res => res))
+    return this.http.post<OrderForCreation>(`${environment.server}/order`, orderForUpdate, {headers:header})
+      .pipe(map<any, Order>(res => res))
   }
 
 }

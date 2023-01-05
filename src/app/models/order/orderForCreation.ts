@@ -1,4 +1,4 @@
-import {BillingAddress} from "./BillingAddress";
+import {BillingAddress} from "./billingAddress";
 import {CustomerForCreation} from "../customer/customer-for-creation";
 
 export interface OrderForCreation {

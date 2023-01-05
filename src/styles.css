@@ -111,3 +111,8 @@ a:hover btn-link:hover{
   color: #10856D
 }
 
+.center{
+  width: 50%;
+  margin: 0 auto;
+}
+

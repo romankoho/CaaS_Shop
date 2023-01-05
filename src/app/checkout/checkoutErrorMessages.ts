@@ -11,6 +11,7 @@ export const CheckoutErrorMessages = [
   new ErrorMessage('lastName', 'required', 'Please enter a last name'),
   new ErrorMessage('email', 'email', 'Please enter a valid email address'),
   new ErrorMessage('email', 'required', 'Please enter a email address'),
+  new ErrorMessage('telephoneNumber', 'required', 'Please enter a phone number'),
   new ErrorMessage('address', 'required', 'Please enter a last address'),
   new ErrorMessage('country', 'required', 'Please enter a last country'),
   new ErrorMessage('state', 'required', 'Please enter a last state'),
