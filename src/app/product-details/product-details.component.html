@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+  <div >
+    <table class="table table-striped bg-body table-responsive mt-3 rounded-2" >
+      <thead>
+      </thead>
+      <tbody>
+      <tr>
+        <th class="w-25 align-middle">
+          <img src="https://picsum.photos/100?t" alt="placeholder image">
+        </th>
+        <td class="w-25 align-middle">
+          <div>
+            <h2
+            >
+              {{product.name}}
+            </h2>
+          </div>
+          <div>
+            <p class="text-navy">
+              {{product.description}}
+            </p>
+          </div>
+          <div class="align-middle">
+            <h4 class="align-middle">
+              {{product.price | currency:'EUR':"symbol"}}
+            </h4>
+          </div>
+        </td>
+        <td class="w-25 align-middle">
+          <div>
+            <button (click)="addToCart(product.id)" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Add to Cart</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

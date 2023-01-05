@@ -9,6 +9,9 @@ import {CartForUpdate} from "../models/cart/cart-for-update";
 import {CartItemForUpdate} from "../models/cart/cart-item-for-update";
 import {CouponForCartUpdate} from "../models/coupon/coupon-for-cart-update";
 import {ProductForCartItemUpdate} from "../models/product/product-for-cart-item-update";
+import {CartItem} from "../models/cart/cart-item";
+import {ProductMinimal} from "../models/product/productMinimal";
+import {v4 as uuidv4} from "uuid";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +24,33 @@ export class CartService {
     console.log(error);
     return of(error);
   }
+
+  addToCart(productId:string): Observable<Cart> {
+    const data = localStorage.getItem('WEA5.cart') || '[]'
+
+    if(data !== '[]') {           //existing cart
+      let cart:Cart = JSON.parse(data)
+      let item = cart.items.find(item => item.product.id == productId)
+
+      if (item == undefined) {    //add new product to cart
+        let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
+        cart.items.push(addCartItem)
+      } else {                    //increase amount by 1
+        item.amount++
+      }
+
+      return this.updateCart(cart.id, cart)
+
+    } else {                    //create new cart
+      let cart: Cart = new Cart()
+      let addCartItem = new CartItem("", new ProductMinimal(productId),"", "", 1)
+      cart.items.push(addCartItem)
+      let cartId = uuidv4();
+
+      return this.updateCart(cartId, cart)
+    }
+  }
+
 
   private mapCartToCartForUpdate(cart: Cart): CartForUpdate {
     let cartItems:CartItemForUpdate[] = []

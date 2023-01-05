@@ -6,6 +6,9 @@ import { environment } from 'src/environments/environment';
 import {ProductPagedResult} from "../models/product/product-paged-result";
 import {Direction} from "../models/base/parsed-pagination-token";
 import * as globals from './globals';
+import {ProductDetail} from "../models/product/productDetail";
+import {ProductDetailsComponent} from "../product-details/product-details.component";
+import {calculateThresholds} from "@angular-devkit/build-angular/src/utils/bundle-calculator";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +40,11 @@ export class ProductService {
 
     return this.http.get<ProductPagedResult[]>(`${environment.server}/Product?q=${q}&paginationDirection=${paginationDirection}&$skiptoken=${cleanSkipToken}&limit=${limit}`
         , {headers: this.getHeader()}).pipe(map<any, ProductPagedResult[]>(res => res), catchError(this.errorHandler));
+  }
+
+  public findById(productId: string):Observable<ProductDetail> {
+    return this.http.get<ProductDetail>(`${environment.server}/product/${productId}`, {headers: this.getHeader()})
+      .pipe(map<any,ProductDetail>(res => res), catchError(this.errorHandler));
   }
 
 }

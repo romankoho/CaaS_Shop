@@ -44,9 +44,6 @@ export class ProductListComponent implements OnInit {
         if(this.pagedResult.nextPage.reference != undefined) {
           this.disableNext = false
         }
-
-        console.log(this.pagedResult)
-
       })
     }
   }
@@ -55,6 +52,9 @@ export class ProductListComponent implements OnInit {
     this.productService.findByTextSearch(this.searchTerm, Direction.Backward, this.pagedResult.previousPage.reference, 10).subscribe((res) => {
       this.pagedResult = res
       this.currentPage--
+      if(this.currentPage == 1) {
+        this.disablePrevious = true
+      }
     })
 
   }
@@ -63,7 +63,6 @@ export class ProductListComponent implements OnInit {
     console.log(this.searchTerm)
     this.productService.findByTextSearch(this.searchTerm, Direction.Forward, this.pagedResult.nextPage.reference, 10).subscribe((res) => {
       this.pagedResult = res
-      console.log(this.pagedResult)
       this.currentPage++
       this.disablePrevious = false
     })
@@ -86,7 +85,6 @@ export class ProductListComponent implements OnInit {
 
       this.cartService.updateCart(cart.id, cart).subscribe({
         next:(res) => {
-          console.log("success case")
           this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
           localStorage.setItem('WEA5.cart', JSON.stringify(res));
         },
@@ -103,7 +101,6 @@ export class ProductListComponent implements OnInit {
 
       this.cartService.updateCart(cartId, cart).subscribe({
         next:(res) => {
-          console.log("success case")
           this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
           localStorage.setItem('WEA5.cart', JSON.stringify(res));
         },

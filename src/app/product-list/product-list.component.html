@@ -1,18 +1,18 @@
 <wea5-search (searchTriggered)="searchTriggered($event)"></wea5-search>
 
 <div class="row justify-content-center">
-  <div class="">
+  <div >
     <table class="table table-striped bg-body table-responsive mt-3 rounded-2" *ngIf="pagedResult != undefined" >
       <thead>
       </thead>
       <tbody>
       <tr class="" *ngFor="let item of pagedResult.items">
-        <th class=>
+        <th class="w-25">
           <img src="https://picsum.photos/100?t" alt="placeholder image">
         </th>
-        <td class="">
+        <td class="w-25">
           <div>
-            <a href="#" class="text-navy">
+            <a [routerLink]="item.id" target="_blank" class="text-navy">
               {{item.name}}
             </a>
           </div>
@@ -22,7 +22,7 @@
             </h4>
           </div>
         </td>
-        <td class="">
+        <td class="w-25">
           <div>
             <button (click)="addToCart(item.id)" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Add to Cart</button>
           </div>

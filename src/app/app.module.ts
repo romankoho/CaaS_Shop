@@ -11,6 +11,7 @@ import { CartComponent } from './cart/cart.component';
 import { CartEntryComponent } from './cart-entry/cart-entry.component';
 import { SearchComponent } from './search/search.component';
 import {NgToastModule} from "ng-angular-popup";
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {NgToastModule} from "ng-angular-popup";
     HomeComponent,
     CartComponent,
     CartEntryComponent,
-    SearchComponent
+    SearchComponent,
+    ProductDetailsComponent
   ],
   imports: [
     NgToastModule,
