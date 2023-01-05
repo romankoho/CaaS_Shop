@@ -17,23 +17,56 @@ import {v4 as uuidv4} from "uuid";
 })
 export class ProductListComponent implements OnInit {
 
-  pagedResult: ProductPagedResult
+  pagedResult: ProductPagedResult = new ProductPagedResult()
+  currentPage: number = 0
+  searchTerm: string = ""
+  disablePrevious: boolean = true
+  disableNext: boolean = true
 
   constructor(private productService: ProductService, private cartService: CartService,
               private toast: NgToastService) { }
 
   ngOnInit(): void {
+
   }
 
-  updateList($event: string) {
+  searchTriggered($event: string) {
     if($event.length > 0) {
-      this.productService.findByTextSearch($event, Direction.Forward, null, 10).subscribe((res) => {
+      this.productService.findByTextSearch($event, Direction.Forward, undefined, 10).subscribe((res) => {
         this.pagedResult = res
         if(this.pagedResult.items?.length == 0) {
           this.toast.error({detail: "So Much Empty", summary:"No Products Found", duration: 5000})
         }
+
+        this.currentPage = 1
+        this.searchTerm = $event
+
+        if(this.pagedResult.nextPage.reference != undefined) {
+          this.disableNext = false
+        }
+
+        console.log(this.pagedResult)
+
       })
     }
+  }
+
+  navigateToPreviousPage() {
+    this.productService.findByTextSearch(this.searchTerm, Direction.Backward, this.pagedResult.previousPage.reference, 10).subscribe((res) => {
+      this.pagedResult = res
+      this.currentPage--
+    })
+
+  }
+
+  navigateToNextPage() {
+    console.log(this.searchTerm)
+    this.productService.findByTextSearch(this.searchTerm, Direction.Forward, this.pagedResult.nextPage.reference, 10).subscribe((res) => {
+      this.pagedResult = res
+      console.log(this.pagedResult)
+      this.currentPage++
+      this.disablePrevious = false
+    })
 
   }
 
@@ -80,4 +113,5 @@ export class ProductListComponent implements OnInit {
       })
     }
   }
+
 }

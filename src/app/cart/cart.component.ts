@@ -23,12 +23,7 @@ export class CartComponent implements OnInit {
 
     if(data !== '[]') {
       this.cart = JSON.parse(data)
-    } else {
-
-      //TODO: replace this -> actually just provide the empty cart
-      //this.cartService.getById('A98CF8AF-1A89-4282-B6DB-ACB2A7410EF5').subscribe(res => this.cart = res)
     }
-
   }
 
 

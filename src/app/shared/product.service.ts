@@ -28,8 +28,14 @@ export class ProductService {
     })
   }
 
-  public findByTextSearch(q: string, paginationDirection: Direction, skipToken:string | null, limit: number): Observable<ProductPagedResult> {
-    return this.http.get<ProductPagedResult[]>(`${environment.server}/Product?q=${q}&paginationDirection=${paginationDirection}&skiptoken=${skipToken}&limit=${limit}`
+  public findByTextSearch(q: string, paginationDirection: Direction, skipToken:string | undefined, limit: number): Observable<ProductPagedResult> {
+    let cleanSkipToken = ""
+
+    if (skipToken != undefined) {
+      cleanSkipToken = skipToken
+    }
+
+    return this.http.get<ProductPagedResult[]>(`${environment.server}/Product?q=${q}&paginationDirection=${paginationDirection}&$skiptoken=${cleanSkipToken}&limit=${limit}`
         , {headers: this.getHeader()}).pipe(map<any, ProductPagedResult[]>(res => res), catchError(this.errorHandler));
   }
 

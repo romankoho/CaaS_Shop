@@ -1,4 +1,4 @@
-<wea5-search (searchTriggered)="updateList($event)"></wea5-search>
+<wea5-search (searchTriggered)="searchTriggered($event)"></wea5-search>
 
 <div class="row justify-content-center">
   <div class="">
@@ -7,8 +7,8 @@
       </thead>
       <tbody>
       <tr class="" *ngFor="let item of pagedResult.items">
-        <th class=" ">
-          <img src="https://picsum.photos/100" alt="placeholder image">
+        <th class=>
+          <img src="https://picsum.photos/100?t" alt="placeholder image">
         </th>
         <td class="">
           <div>
@@ -32,3 +32,20 @@
     </table>
   </div>
 </div>
+
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{
+        disabled: disablePrevious
+        }">
+      <button (click)="navigateToPreviousPage()" class="page-link " >Previous</button>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">{{currentPage}}/{{pagedResult.totalPages}}</a></li>
+    <li class="page-item" [ngClass]="{
+        disabled: disableNext
+        }">
+      <button (click)="navigateToNextPage()" class="page-link">Next</button>
+    </li>
+  </ul>
+</nav>
