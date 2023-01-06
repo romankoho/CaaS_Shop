@@ -76,13 +76,13 @@
         </div>
 
         <div class="col-md-4">
-          <label for="state" class="form-label">State</label>
-          <input [ngClass]="{'border-warning': errors['state']}"
-            name="state"
-            formControlName="state"
-            type="text" class="form-control" id="state" placeholder="Florida">
-          <div class="text-info-emphasis" *ngIf="errors['state']">
-            {{ errors['state'] }}
+          <label for="city" class="form-label">City</label>
+          <input [ngClass]="{'border-warning': errors['city']}"
+            name="city"
+            formControlName="city"
+            type="text" class="form-control" id="city" placeholder="Miami">
+          <div class="text-info-emphasis" *ngIf="errors['city']">
+            {{ errors['city'] }}
           </div>
         </div>
 

@@ -9,6 +9,8 @@ import {CartService} from "../shared/cart.service";
 import {Order} from "../models/order/order";
 import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
+import {CustomerService} from "../shared/customer.service";
+import {Customer} from "../models/customer/customer";
 
 @Component({
   selector: 'wea5-checkout',
@@ -29,6 +31,7 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private cartService: CartService,
+              private customerService: CustomerService,
               private toast: NgToastService,
               private router: Router,) { }
 
@@ -49,7 +52,7 @@ export class CheckoutComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       address: ["", Validators.required],
       country: ["", Validators.required],
-      state: ["", Validators.required],
+      city: ["", Validators.required],
       zip: ["", Validators.required],
       telephoneNumber: ["", Validators.required],
       ccName: ["", Validators.required],
@@ -87,20 +90,42 @@ export class CheckoutComponent implements OnInit {
     this.checkingOut = true
     this.fillInForm = false
 
+    this.customerService.getByEMail(this.checkoutForm.value.email).subscribe({
+      next:(res) => {
+
+        let customer: CustomerForCreation = {
+          id: res.id,
+          firstName: res.firstName,
+          lastName: res.lastName,
+          eMail: res.eMail,
+          telephoneNumber: res.telephoneNumber,
+          creditCardNumber: this.checkoutForm.value.ccNumber
+        }
+
+        this.convertCartToOrder(customer)
+      },
+      error:(e) => {
+        if(e.error.status == 404) {
+          let customer: CustomerForCreation = {
+            id: uuidv4(),
+            firstName: this.checkoutForm.value.firstName,
+            lastName: this.checkoutForm.value.lastName,
+            eMail: this.checkoutForm.value.email,
+            telephoneNumber: this.checkoutForm.value.telephoneNumber,
+            creditCardNumber: this.checkoutForm.value.ccNumber
+          }
+          this.convertCartToOrder(customer)
+        }
+      }
+    })
+  }
+
+  private convertCartToOrder(customer: CustomerForCreation) {
     let address: BillingAddress = {
       street: this.checkoutForm.value.address,
-      city: "",
+      city: this.checkoutForm.value.city,
       country: this.checkoutForm.value.country,
       zipCode: this.checkoutForm.value.zip,
-    }
-
-    let customer: CustomerForCreation = {
-      id: uuidv4(),
-      firstName: this.checkoutForm.value.firstName,
-      lastName: this.checkoutForm.value.lastName,
-      eMail: this.checkoutForm.value.email,
-      telephoneNumber: this.checkoutForm.value.telephoneNumber,
-      creditCardNumber: this.checkoutForm.value.ccNumber
     }
 
     this.cartService.convertCartToOrder(this.cart.id, address, customer).subscribe({

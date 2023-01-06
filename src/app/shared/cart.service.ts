@@ -29,9 +29,9 @@ export class CartService {
   }
 
   addToCart(productId:string): Observable<Cart> {
-    const data = localStorage.getItem('WEA5.cart') || '[]'
+    const data = localStorage.getItem('WEA5.cart')
 
-    if(data !== '[]') {           //existing cart
+    if(data) {           //existing cart
       let cart:Cart = JSON.parse(data)
       let item = cart.items.find(item => item.product.id == productId)
 
@@ -143,7 +143,7 @@ export class CartService {
 
   public convertCartToOrder(cartId: string, billingAddress: BillingAddress, customer: CustomerForCreation): Observable<Order> {
 
-    let orderForUpdate: OrderForCreation = {
+    let orderForCreation: OrderForCreation = {
       cartId: cartId,
       billingAddress: billingAddress,
       customer: customer
@@ -155,7 +155,9 @@ export class CartService {
       'Content-Type': 'application/json'
     })
 
-    return this.http.post<OrderForCreation>(`${environment.server}/order`, orderForUpdate, {headers:header})
+    console.log(orderForCreation)
+
+    return this.http.post<OrderForCreation>(`${environment.server}/order`, orderForCreation, {headers:header})
       .pipe(map<any, Order>(res => res))
   }
 

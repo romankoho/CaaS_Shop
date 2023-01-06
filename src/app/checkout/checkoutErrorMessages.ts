@@ -14,7 +14,7 @@ export const CheckoutErrorMessages = [
   new ErrorMessage('telephoneNumber', 'required', 'Please enter a phone number'),
   new ErrorMessage('address', 'required', 'Please enter a last address'),
   new ErrorMessage('country', 'required', 'Please enter a last country'),
-  new ErrorMessage('state', 'required', 'Please enter a last state'),
+  new ErrorMessage('city', 'required', 'Please enter a city'),
   new ErrorMessage('zip', 'required', 'Please enter a last ZIP code'),
   new ErrorMessage('ccName', 'required', 'Please enter the name of the card holder'),
   new ErrorMessage('ccNumber', 'required', 'Please enter a credit card number'),
