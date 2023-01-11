@@ -4,9 +4,9 @@
     <tr>
       <td class="desc align-middle">
         <h3>
-          <a href="#" class="text-navy">
-            {{name}}
-          </a>
+          <button (click)="navigateToProduct()" class="btn btn-link text-navy">
+            {{cartItem.product.name}}
+          </button>
         </h3>
 
         <div *ngIf="invalidAmount" class="m-t-sm"><span class="text-bg-warning">Invalid amount</span>
@@ -14,7 +14,7 @@
       </td>
 
       <td width="90" class="align-middle">
-        <input type="text" class="form-control" [(ngModel)]="amount" (change)="amountHasChanged()">
+        <input type="text" class="form-control" [(ngModel)]="cartItem.amount" (change)="amountHasChanged()">
       </td>
 
       <td class="align-middle w-25">
@@ -26,9 +26,9 @@
       </td>
 
       <td class="align-middle w-25">
-        <span class="text-decoration-line-through text-navy"  *ngIf="(totalItemPrice < sum)">{{ sum | currency:'EUR':"symbol" }} </span>
+        <span class="text-decoration-line-through text-navy"  *ngIf="(cartItem.totalPrice < sum)">{{ sum | currency:'EUR':"symbol" }} </span>
         <h4>
-          {{ totalItemPrice | currency:'EUR':"symbol" }}
+          {{ cartItem.totalPrice | currency:'EUR':"symbol" }}
         </h4>
       </td>
 

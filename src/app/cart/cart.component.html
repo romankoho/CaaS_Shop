@@ -1,4 +1,4 @@
-<div class="bg-white rounded-3 p-3">
+<div class="bg-white rounded-3 p-3 mb-5">
 <div class="container">
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -8,8 +8,8 @@
             <h5>Items in your cart ({{getItemsCount()}})</h5>
           </div>
           <div *ngFor="let item of cart.items" class="mb-3">
-            <div class="wea5-cart-entry" (deleteItemEvent)="removeItem($event)" (amountChanged)="amountChanged($event.productId, $event.amount)" [cartId]="cart.id" [id]="item.id" [name]="item.product.name"
-                 [productId]="item.product.id" [amount]="item.amount" [price]="item.product.price" [totalItemPrice]="item.totalPrice" >
+            <div class="wea5-cart-entry" (deleteItemEvent)="removeItem($event)" (amountChanged)="amountChanged($event.productId, $event.amount)"
+                 [cartId]="cart.id" [cartItem]="item">
             </div>
             <hr>
           </div>
