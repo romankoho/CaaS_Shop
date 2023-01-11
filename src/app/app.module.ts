@@ -13,6 +13,7 @@ import { SearchComponent } from './search/search.component';
 import {NgToastModule} from "ng-angular-popup";
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     CartEntryComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    FooterComponent
   ],
   imports: [
     NgToastModule,

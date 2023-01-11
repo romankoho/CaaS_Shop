@@ -1,18 +1,20 @@
-
+<div class="bg-white rounded-3 p-3">
 <div class="container">
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-      <div class="col-md-9">
-        <div class="ibox">
-          <div class="ibox-title">
+      <div class="col">
+        <div class="row col p-3 m-3 rounded-3" style="background-color: #f0f0f3">
+          <div >
             <h5>Items in your cart ({{getItemsCount()}})</h5>
           </div>
-          <div *ngFor="let item of cart.items" class="ibox-content">
+          <div *ngFor="let item of cart.items" class="mb-3">
             <div class="wea5-cart-entry" (deleteItemEvent)="removeItem($event)" (amountChanged)="amountChanged($event.productId, $event.amount)" [cartId]="cart.id" [id]="item.id" [name]="item.product.name"
-                 [productId]="item.product.id" [amount]="item.amount" [price]="item.product.price" [totalItemPrice]="item.totalPrice" ></div>
+                 [productId]="item.product.id" [amount]="item.amount" [price]="item.product.price" [totalItemPrice]="item.totalPrice" >
+            </div>
+            <hr>
           </div>
 
-          <div class="ibox-content">
+          <div class="mt-2">
             <h2>Coupons</h2>
             <div *ngFor="let coupon of cart.coupons" class="table-responsive">
               <table class="table shopping-cart-table">
@@ -65,12 +67,12 @@
         </div>
 
       </div>
-      <div class="col-md-3">
-        <div class="ibox">
-          <div class="ibox-title">
+      <div class="row col-3 p-3 m-3 rounded-3" style="background-color: #f0f0f3">
+        <div>
+          <div>
             <h5>Cart Summary</h5>
           </div>
-          <div class="ibox-content">
+          <div>
                     <span>
                         Total
                     </span>
@@ -92,4 +94,6 @@
   </div>
 </div>
 
+<wea5-footer></wea5-footer>
 
+</div>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import * as globals from "./globals";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
 import {Cart} from "../models/cart/cart";
@@ -125,7 +124,7 @@ export class CartService {
 
   private createHeader(): HttpHeaders {
     let header = new HttpHeaders({
-      'X-tenant-id': globals.tenantId,
+      'X-tenant-id': `${environment.tenantId}`,
       'Accept': 'application/json'
     })
     return header
@@ -150,7 +149,7 @@ export class CartService {
     }
 
     let header = new HttpHeaders({
-      'X-tenant-id': globals.tenantId,
+      'X-tenant-id': `${environment.tenantId}`,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     })

@@ -54,7 +54,7 @@ export class ProductListComponent implements OnInit {
 
         this.searchTerm = $event
 
-        if(this.pagedResult.nextPage.reference != undefined) {
+        if(this.pagedResult.nextPage != undefined) {
           this.disableNext = false
         }
       })
@@ -73,11 +73,14 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToNextPage() {
-    console.log(this.searchTerm)
     this.productService.findByTextSearch(this.searchTerm, Direction.Forward, this.pagedResult.nextPage.reference, 10).subscribe((res) => {
       this.pagedResult = res
       this.currentPage++
       this.disablePrevious = false
+
+      if(this.pagedResult.nextPage == undefined) {
+        this.disableNext = false
+      }
     })
   }
 

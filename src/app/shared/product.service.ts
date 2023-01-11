@@ -5,10 +5,7 @@ import { map, catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import {ProductPagedResult} from "../models/product/product-paged-result";
 import {Direction} from "../models/base/parsed-pagination-token";
-import * as globals from './globals';
 import {ProductDetail} from "../models/product/productDetail";
-import {ProductDetailsComponent} from "../product-details/product-details.component";
-import {calculateThresholds} from "@angular-devkit/build-angular/src/utils/bundle-calculator";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +23,7 @@ export class ProductService {
 
   private getHeader(): HttpHeaders {
     return new HttpHeaders({
-      'X-tenant-id': globals.tenantId,
+      'X-tenant-id': `${environment.tenantId}`,
       'Accept': 'application/json'
     })
   }

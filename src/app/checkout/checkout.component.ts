@@ -10,7 +10,6 @@ import {Order} from "../models/order/order";
 import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
 import {CustomerService} from "../shared/customer.service";
-import {Customer} from "../models/customer/customer";
 
 @Component({
   selector: 'wea5-checkout',
@@ -24,6 +23,7 @@ export class CheckoutComponent implements OnInit {
   errors: { [key: string]: string } = {};
 
   cart: Cart
+  updatedCart: Cart
   checkingOut: boolean = false;
   fillInForm: boolean = true;
 
@@ -40,6 +40,12 @@ export class CheckoutComponent implements OnInit {
 
     if(data) {
       this.cart = JSON.parse(data)
+      this.cartService.getById(this.cart.id).subscribe(res => {
+        this.updatedCart = res
+        if (this.cart.totalPrice != this.updatedCart.totalPrice) {
+          this.toast.warning({detail: "Price was updated", summary:`Old price: ${this.cart.totalPrice} | new price: ${this.updatedCart.totalPrice}`, sticky:true})
+        }
+      })
     }
 
     this.initForm()
@@ -132,7 +138,7 @@ export class CheckoutComponent implements OnInit {
       next:(res) => {
         console.log("payment successful")
         this.order = res;
-        this.toast.success({detail: "Order was successfully placed!", summary:`${this.order.orderNumber} is your order number`, duration: 10000})
+        this.toast.success({detail: "Order was successfully placed!", summary:`${this.order.orderNumber} is your order number`, sticky:true})
         localStorage.removeItem('WEA5.cart')
         this.router.navigateByUrl("/home")
 

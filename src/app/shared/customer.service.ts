@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 import {Customer} from "../models/customer/customer";
-import * as globals from "./globals";
 import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 
@@ -20,7 +19,7 @@ export class CustomerService {
 
   public getByEMail(email:string): Observable<Customer>{
     let header = new HttpHeaders({
-      'X-tenant-id': globals.tenantId,
+      'X-tenant-id': `${environment.tenantId}`,
       'Accept': 'application/json'
     })
 

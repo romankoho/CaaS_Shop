@@ -1,6 +1,8 @@
-<wea5-search (searchTriggered)="searchTriggered($event)"></wea5-search>
 
-<div class="row justify-content-center">
+<div class="bg-white rounded-3 p-3">
+
+  <wea5-search (searchTriggered)="searchTriggered($event)"></wea5-search>
+  <div class="row justify-content-center">
   <div >
     <table class="table table-striped bg-body table-responsive mt-3 rounded-2" *ngIf="pagedResult != undefined" >
       <thead>
@@ -49,3 +51,6 @@
     </li>
   </ul>
 </nav>
+
+<wea5-footer></wea5-footer>
+</div>

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server: 'http://localhost:80'
+  server: 'http://localhost:80',
+  tenantId: 'a468d796-db09-496d-9794-f6b42f8c7c0b'
 };
 
 /*
