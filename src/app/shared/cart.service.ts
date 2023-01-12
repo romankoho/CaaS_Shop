@@ -131,7 +131,7 @@ export class CartService {
   }
 
   public getById(cartId: string): Observable<Cart> {
-    return this.http.get<Cart>(`${environment.server}/Cart/${cartId}`, {headers: this.createHeader()})
+    return this.http.get<Cart>(`${environment.server}/cart/${cartId}`, {headers: this.createHeader()})
       .pipe(map<any, Cart>(res => res), catchError(this.errorHandler));
   }
 

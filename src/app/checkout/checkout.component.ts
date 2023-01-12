@@ -23,12 +23,44 @@ export class CheckoutComponent implements OnInit {
   checkoutForm!: FormGroup;
   errors: { [key: string]: string } = {};
 
-  cart: Cart
-  updatedCart: Cart
+  cart: Cart = {
+    basePrice: 0,
+    cartDiscounts: [],
+    coupons: [],
+    customer: {
+      id:"",
+      shopId:""
+    },
+    discountValue: 0,
+    id: "",
+    items: [],
+    lastAccess: "",
+    shopId: "",
+    totalPrice: 0
+
+  }
+  updatedCart: Cart = {
+    basePrice: 0,
+    cartDiscounts: [],
+    coupons: [],
+    customer: {
+      id:"",
+      shopId:""
+    },
+    discountValue: 0,
+    id: "",
+    items: [],
+    lastAccess: "",
+    shopId: "",
+    totalPrice: 0
+  }
+
   checkingOut: boolean = false;
   fillInForm: boolean = true;
 
-  order: Order
+  order: Order = {
+    billingAddress: {}, customerId: "", id: "", orderDate: new Date(), orderNumber: 0, shopId: "", totalPrice: 0
+  }
 
   constructor(private fb: FormBuilder,
               private cartService: CartService,
@@ -169,5 +201,4 @@ export class CheckoutComponent implements OnInit {
       }
     });
   }
-
 }
