@@ -6,6 +6,7 @@ import {Coupon} from "../models/coupon/coupon";
 import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
 import {CouponForCartUpdate} from "../models/coupon/coupon-for-cart-update";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'wea5-cart',
@@ -23,7 +24,7 @@ export class CartComponent implements OnInit {
               private toast: NgToastService) { }
 
   ngOnInit(): void {
-    const data = localStorage.getItem('WEA5.cart')
+    const data = localStorage.getItem(`${environment.tenantId}.cart`)
 
     if(data) {
       this.cart = JSON.parse(data)
@@ -72,7 +73,7 @@ export class CartComponent implements OnInit {
 
     this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
       this.cart = res
-      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+      localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
     })
   }
 
@@ -80,7 +81,7 @@ export class CartComponent implements OnInit {
     this.cart.items = this.cart.items!.filter(element => element.product?.id != $event)
     this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
       this.cart = res
-      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+      localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
     })
   }
 
@@ -88,7 +89,7 @@ export class CartComponent implements OnInit {
     this.cart.coupons = this.cart.coupons!.filter(element => element.code != code)
     this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
       this.cart = res
-      localStorage.setItem('WEA5.cart', JSON.stringify(this.cart));
+      localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
     })
   }
 
@@ -104,7 +105,7 @@ export class CartComponent implements OnInit {
     this.cartService.updateCart(this.cart.id, copyCart).subscribe({
       next:(res) => {
         this.cart = res;
-        localStorage.setItem('WEA5.cart', JSON.stringify(this.cart))
+        localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart))
         this.cart = res
       },
       error: (e) => {

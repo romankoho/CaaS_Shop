@@ -28,7 +28,7 @@ export class CartService {
   }
 
   addToCart(productId:string): Observable<Cart> {
-    const data = localStorage.getItem('WEA5.cart')
+    const data = localStorage.getItem(`${environment.tenantId}.cart`)
 
     if(data) {           //existing cart
       let cart:Cart = JSON.parse(data)

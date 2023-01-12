@@ -10,6 +10,7 @@ import {Order} from "../models/order/order";
 import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
 import {CustomerService} from "../shared/customer.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'wea5-checkout',
@@ -36,7 +37,7 @@ export class CheckoutComponent implements OnInit {
               private router: Router,) { }
 
   ngOnInit(): void {
-    const data = localStorage.getItem('WEA5.cart')
+    const data = localStorage.getItem(`${environment.tenantId}.cart`)
 
     if(data) {
       this.cart = JSON.parse(data)
@@ -139,7 +140,7 @@ export class CheckoutComponent implements OnInit {
         console.log("payment successful")
         this.order = res;
         this.toast.success({detail: "Order was successfully placed!", summary:`${this.order.orderNumber} is your order number`, sticky:true})
-        localStorage.removeItem('WEA5.cart')
+        localStorage.removeItem(`${environment.tenantId}.cart`)
         this.router.navigateByUrl("/home")
 
       },

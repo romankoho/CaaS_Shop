@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   productsInCart() : number{
-    const data = localStorage.getItem('WEA5.cart') || '[]'
+    const data = localStorage.getItem(`${environment.tenantId}.cart`) || '[]'
 
     if(data == "[]") {
       return 0

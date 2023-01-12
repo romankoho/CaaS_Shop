@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../shared/product.service";
 import {CartService} from "../shared/cart.service";
 import {NgToastService} from "ng-angular-popup";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'wea5-product-details',
@@ -32,7 +33,7 @@ export class ProductDetailsComponent implements OnInit {
     this.cartService.addToCart(productId).subscribe({
       next:(res) => {
         this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
-        localStorage.setItem('WEA5.cart', JSON.stringify(res));
+        localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(res));
       },
       error:(e) => {
         this.toast.error({detail: "Uuups", summary:"Something Went Wrong", duration: 5000})
