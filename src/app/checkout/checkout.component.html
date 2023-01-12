@@ -1,7 +1,7 @@
 <div class="bg-white rounded-3 p-3 mb-5">
   <div class="center text-center" *ngIf="checkingOut">
     <div class="spinner-border align-middle" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{{'checkout.loading' | translate}}</span>
     </div>
   </div>
 
@@ -9,20 +9,20 @@
     <div class="col-md-5 col-lg-4 order-md-last">
       <ul class="list-group mb-3">
         <li class="list-group-item d-flex justify-content-between bg-primary">
-          <h2 class="text-white">Total (EUR)</h2>
+          <h2 class="text-white">{{'checkout.total' | translate}}</h2>
           <h2 class="text-white">{{this.updatedCart.totalPrice | currency:'EUR':"symbol"}}</h2>
         </li>
       </ul>
 
     </div>
     <div class="col-md-7 col-lg-8">
-      <h4 class="mb-3">Billing address</h4>
+      <h4 class="mb-3">{{'checkout.billingAddress' | translate}}</h4>
       <form [formGroup]="checkoutForm"
             (ngSubmit)="submitForm()">
 
         <div class="row g-3">
           <div class="col-sm-6">
-            <label for="firstName" class="form-label">First name</label>
+            <label for="firstName" class="form-label">{{'checkout.firstName' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['firstName']}"
               name="firstName"
               formControlName="firstName"
@@ -33,7 +33,7 @@
           </div>
 
           <div class="col-sm-6">
-            <label for="lastName" class="form-label">Last name</label>
+            <label for="lastName" class="form-label">{{'checkout.lastName' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['lastName']}"
               name="lastName"
               formControlName="lastName"
@@ -44,7 +44,7 @@
           </div>
 
           <div class="col-12">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">{{'checkout.email' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['email']}"
               name="email"
               formControlName="email"
@@ -55,7 +55,7 @@
           </div>
 
           <div class="col-12">
-            <label for="address" class="form-label">Address</label>
+            <label for="address" class="form-label">{{'checkout.address' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['address']}"
               name="address"
               formControlName="address"
@@ -66,7 +66,7 @@
           </div>
 
           <div class="col-md-5">
-            <label for="country" class="form-label">Country</label>
+            <label for="country" class="form-label">{{'checkout.country' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['country']}"
               name="country"
               formControlName="country"
@@ -77,7 +77,7 @@
           </div>
 
           <div class="col-md-4">
-            <label for="city" class="form-label">City</label>
+            <label for="city" class="form-label">{{'checkout.city' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['city']}"
               name="city"
               formControlName="city"
@@ -88,7 +88,7 @@
           </div>
 
           <div class="col-md-3">
-            <label for="zip" class="form-label">Zip</label>
+            <label for="zip" class="form-label">{{'checkout.zip' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['zip']}"
               name="zip"
               formControlName="zip"
@@ -100,7 +100,7 @@
         </div>
 
         <div class="col-12 mt-3">
-          <label for="telephoneNumber" class="form-label">Telephone Number</label>
+          <label for="telephoneNumber" class="form-label">{{'checkout.telephoneNumber' | translate}}</label>
           <input [ngClass]="{'border-warning': errors['telephoneNumber']}"
                  name="telephoneNumber"
                  formControlName="telephoneNumber"
@@ -112,11 +112,11 @@
 
         <hr class="my-4">
 
-        <h4 class="mb-3">Payment</h4>
+        <h4 class="mb-3">{{'checkout.payment' | translate}}</h4>
 
         <div class="row gy-3">
           <div class="col-md-6">
-            <label for="cc-name" class="form-label">Name on card</label>
+            <label for="cc-name" class="form-label">{{'checkout.cardName' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['ccName']}"
               name="ccName"
               formControlName="ccName"
@@ -128,7 +128,7 @@
           </div>
 
           <div class="col-md-6">
-            <label for="cc-number" class="form-label">Credit card number</label>
+            <label for="cc-number" class="form-label">{{'checkout.cardNumber' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['ccNumber']}"
               name="ccNumber"
               formControlName="ccNumber"
@@ -139,7 +139,7 @@
           </div>
 
           <div class="col-md-3">
-            <label for="cc-expiration" class="form-label">Expiration</label>
+            <label for="cc-expiration" class="form-label">{{'checkout.expiration' | translate}}</label>
             <input [ngClass]="{'border-warning': errors['ccExpiration']}"
               name="ccExpiration"
               formControlName="ccExpiration"
@@ -163,7 +163,7 @@
 
         <hr class="my-4">
 
-        <button class="w-100 btn btn-primary btn-lg" [disabled]="checkoutForm.invalid" type="submit">Submit Order</button>
+        <button class="w-100 btn btn-primary btn-lg" [disabled]="checkoutForm.invalid" type="submit">{{'checkout.submitOrder' | translate}}</button>
       </form>
     </div>
   </div>

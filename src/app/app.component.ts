@@ -1,14 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductMinimal} from "./models/product/productMinimal";
 import {Cart} from "./models/cart/cart";
-import {FormBuilder} from "@angular/forms";
-import {CartService} from "./shared/cart.service";
-import {CustomerService} from "./shared/customer.service";
-import {NgToastService} from "ng-angular-popup";
-import {Router} from "@angular/router";
 import {ShopService} from "./shared/shop.service";
 import {environment} from "../environments/environment";
 import {Shop} from "./models/shop/shop";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'wea5-root',
@@ -17,9 +12,20 @@ import {Shop} from "./models/shop/shop";
 })
 export class AppComponent implements OnInit {
   title = 'CaaSShop1';
-  shop: Shop
+  shop: Shop = {
+    cartLifetimeMinutes: 0, id: "",
+    shopAdmin: {
+      shopId: "",
+      id: ""
+    }
+  }
 
-  constructor(private shopService: ShopService) { }
+  language: string = 'en'
+
+  constructor(private shopService: ShopService, private translate: TranslateService) {
+    translate.addLangs(['en', 'de']);
+    translate.setDefaultLang('en');
+  }
 
   ngOnInit(): void {
     this.shopService.getById(`${environment.tenantId}`).subscribe(res => {
@@ -44,7 +50,12 @@ export class AppComponent implements OnInit {
         productCount += item.amount
       }
     }
-
     return productCount
+  }
+
+  switchLang(lang: string) {
+    this.language = lang
+    this.translate.set
+    this.translate.setDefaultLang(lang)
   }
 }

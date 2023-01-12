@@ -8,8 +8,8 @@
             {{cartItem.product.name}}
           </button>
         </h3>
-
-        <div *ngIf="invalidAmount" class="m-t-sm"><span class="text-bg-warning">Invalid amount</span>
+        <div *ngIf="invalidAmount" class="m-t-sm">
+          <span class="text-bg-warning">{{'cartItem.invalidAmount' | translate}}</span>
         </div>
       </td>
 

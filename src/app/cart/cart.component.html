@@ -15,19 +15,20 @@
           </div>
 
           <div class="mt-2">
-            <h2>Coupons</h2>
+            <h2>{{'cart.coupons' | translate}}</h2>
             <div *ngFor="let coupon of cart.coupons" class="table-responsive">
               <table class="table shopping-cart-table">
                 <tbody>
                 <tr>
                   <td class="align-middle w-50">
                     <h3 class="text-info-emphasis">
-                      Code: {{coupon.code}}
+                      {{'cart.code' | translate}}: {{coupon.code}}
                     </h3>
                   </td>
 
                   <td class="align-middle w-25">
-                    <button (click)="removeCoupon(coupon?.code)" type="button" class="btn btn-link text-navy">Remove coupon</button>
+                    <button (click)="removeCoupon(coupon?.code)" type="button" class="btn btn-link text-navy">
+                      {{'cart.removeCoupon' | translate}}</button>
                   </td>
 
                   <td class="align-middle w-25">
@@ -45,18 +46,18 @@
               <tr>
                 <td class="align-middle w-75">
                   <div class="form-outline flex-fill">
-                    <input #couponInput type="text" class="form-control" placeholder="Discount code"/>
+                    <input #couponInput type="text" class="form-control" placeholder="{{'cart.code' | translate}}"/>
                   </div>
                 </td>
 
                 <td class="align-middle w-25">
-                    <button class="btn btn-primary" (click)="applyCoupon(couponInput.value)">Apply</button>
+                    <button class="btn btn-primary" (click)="applyCoupon(couponInput.value)">{{'cart.apply' | translate}}</button>
                 </td>
               </tr>
 
               <tr>
                 <div>
-                  <button (click)="navigateToCheckout()" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+                  <button (click)="navigateToCheckout()" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> {{'cart.checkout' | translate}}</button>
                 </div>
               </tr>
 
@@ -70,12 +71,10 @@
       <div class="row col-3 p-3 m-3 rounded-3" style="background-color: #f0f0f3">
         <div>
           <div>
-            <h5>Cart Summary</h5>
+            <h5>{{'cart.cartSummary' | translate}}</h5>
           </div>
           <div>
-                    <span>
-                        Total
-                    </span>
+            <span>{{'cart.total' | translate}}</span>
             <h2 class="font-bold">
               {{cart.totalPrice | currency:'EUR':"symbol"}}
             </h2>
@@ -83,7 +82,7 @@
             <hr>
             <div class="m-t-sm">
               <div class="btn-group">
-                <a (click)="navigateToCheckout()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
+                <a (click)="navigateToCheckout()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> {{'cart.checkout' | translate}}</a>
               </div>
             </div>
           </div>

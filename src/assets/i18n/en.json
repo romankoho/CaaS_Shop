@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "Products": "Products",
+    "Cart": "Cart",
+    "Language": "Language"
+  },
+  "home": {
+    "card1title": "The 5 best video cutting tools",
+    "browseSoftware": "Browse Software",
+    "card2title": "What's after Tik Tok?",
+    "readNow": "Read now",
+    "card3title": "Draw.io and more"
+  },
+  "cart": {
+    "coupons": "Coupons",
+    "code": "Code",
+    "removeCoupon": "Remove Coupon",
+    "apply": "Apply",
+    "checkout": "Checkout",
+    "cartSummary": "Cart Summary",
+    "total": "Total"
+  },
+  "cartItem": {
+    "invalidAmount": "Invalid Amount"
+  },
+  "checkout": {
+    "loading": "Loading...",
+    "total": "Total",
+    "billingAddress": "Billing Address",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "E-Mail",
+    "address": "Address",
+    "country": "Country",
+    "city": "City",
+    "zip": "ZIP",
+    "telephoneNumber": "Telephone Number",
+    "payment": "Payment",
+    "cardName": "Name on Card",
+    "cardNumber": "Credit Card Number",
+    "expiration": "Expiration",
+    "submitOrder": "Submit Order"
+  },
+  "productDetails": {
+    "addToCart": "Add to Cart"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "search": {
+    "search": "Search"
+  },
+  "footer": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "FAQs": "FAQs",
+    "about": "About"
+  }
+}
+

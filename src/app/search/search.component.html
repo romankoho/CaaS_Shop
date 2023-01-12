@@ -2,10 +2,10 @@
   <form class="col-12 col-lg-auto mb-5 mb-lg-0 w-50" role="search">
     <div class="row">
       <div class="col">
-        <input #searchTerm class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <input #searchTerm class="form-control me-2" type="search" placeholder="{{'search.search' | translate}}" aria-label="Search">
       </div>
       <div class="col">
-        <button (click)="searchTriggered.emit(searchTerm.value)" class="btn btn-primary" type="submit">Search</button>
+        <button (click)="searchTriggered.emit(searchTerm.value)" class="btn btn-primary" type="submit">{{'search.search' | translate}}</button>
       </div>
     </div>
   </form>

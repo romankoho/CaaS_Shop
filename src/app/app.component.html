@@ -4,29 +4,30 @@
     <div class="container-fluid ">
       <a class="navbar-brand text-white fw-bold" routerLink="home" routerLinkActive="active">{{shop.name}}</a>
 
-      <div class="collapse navbar-collapse" id="navigation">
-
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="navbar-collapse" id="navigation">
+        <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" routerLink="products" routerLinkActive="active">Products</a>
+            <a class="nav-link active text-white" aria-current="page" routerLink="products" routerLinkActive="active">{{'nav.Products' | translate}}</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" routerLink="cart" routerLinkActive="active">Cart ({{productsInCart()}})</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="country_select" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Language
-            </a>
-
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Deutsch</a></li>
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
+            <a class="nav-link active text-white" aria-current="page" routerLink="cart" routerLinkActive="active">{{'nav.Cart' | translate}} ({{productsInCart()}})</a>
           </li>
         </ul>
+      </div>
 
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="country_select" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{'nav.Language' | translate}} ({{this.language}})
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <button (click)="switchLang('de')" class="dropdown-item" [ngClass]="{'active': this.language=='de'}">Deutsch</button>
+          </li>
+          <li>
+            <button (click)="switchLang('en')" class="dropdown-item" [ngClass]="{'active': this.language=='en'}">English</button>
+          </li>
+        </ul>
       </div>
 
     </div>

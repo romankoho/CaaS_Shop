@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "Products": "Produkte",
+    "Cart": "Warenkorb",
+    "Language": "Sprache"
+  },
+  "home": {
+    "card1title": "Die 5 besten Videobearbeitungs-Tools",
+    "browseSoftware": "Software durchsuchen",
+    "card2title": "Was kommt nach Tik Tok?",
+    "readNow": "Jetzt lesen",
+    "card3title": "Draw.io und mehr"
+  },
+  "cart": {
+    "coupons": "Gutschein",
+    "code": "Code",
+    "removeCoupon": "Gutschein entfernen",
+    "apply": "Anwenden",
+    "checkout": "zum Checkout",
+    "cartSummary": "Warenkorb Zusammenfassung",
+    "total": "Gesamt"
+  },
+  "cartItem": {
+    "invalidAmount": "Ungültige Menge"
+  },
+  "checkout": {
+    "loading": "Laden...",
+    "total": "Gesamt",
+    "billingAddress": "Rechnungsadresse",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "address": "Adresse",
+    "country": "Land",
+    "city": "Stadt",
+    "zip": "PLZ",
+    "telephoneNumber": "Telefonnummer",
+    "payment": "Bezahlung",
+    "cardName": "Name auf Kreditkarte",
+    "cardNumber": "Kreditkartennummer",
+    "expiration": "Ablaufdatum",
+    "submitOrder": "Kostenpflichtig bestellen"
+  },
+  "productDetails": {
+    "addToCart": "Zum Warenkorb hinzufügen"
+  },
+  "pagination": {
+    "previous": "Zurück",
+    "next": "Weiter"
+  },
+  "search": {
+    "search": "Suchen"
+  },
+  "footer": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Preise",
+    "FAQs": "FAQs",
+    "about": "Über uns"
+  }
+
+}

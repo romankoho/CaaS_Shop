@@ -20,13 +20,13 @@
           </div>
           <div>
             <h4>
-              {{item.price}}
+              {{item.price | currency:'EUR':"symbol"}}
             </h4>
           </div>
         </td>
         <td class="w-25">
           <div>
-            <button (click)="addToCart(item.id)" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Add to Cart</button>
+            <button (click)="addToCart(item.id)" class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> {{'productDetails.addToCart' | translate}}</button>
           </div>
         </td>
       </tr>
@@ -41,13 +41,13 @@
     <li class="page-item" [ngClass]="{
         disabled: disablePrevious
         }">
-      <button (click)="navigateToPreviousPage()" class="page-link " >Previous</button>
+      <button (click)="navigateToPreviousPage()" class="page-link " >{{'pagination.previous' | translate}}</button>
     </li>
     <li class="page-item"><a class="page-link" href="#">{{currentPage}}/{{pagedResult.totalPages}}</a></li>
     <li class="page-item" [ngClass]="{
         disabled: disableNext
         }">
-      <button (click)="navigateToNextPage()" class="page-link">Next</button>
+      <button (click)="navigateToNextPage()" class="page-link">{{'pagination.next' | translate}}</button>
     </li>
   </ul>
 </nav>
