@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   styles: []
 })
 export class AppComponent implements OnInit {
-  title = 'CaaSShop1';
+  title = 'CaaSShop';
   shop: Shop = {
     cartLifetimeMinutes: 0, id: "",
     shopAdmin: {
