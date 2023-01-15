@@ -23,7 +23,7 @@ export class CartEntryComponent implements OnInit {
   @Output() deleteItemEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.sum = this.cartItem.amount * this.cartItem.product.price
+    this.sum = Math.round(((this.cartItem.amount * this.cartItem.product.price) + Number.EPSILON) * 100 )/100
   }
 
   public deleteItem(): void {
@@ -31,17 +31,14 @@ export class CartEntryComponent implements OnInit {
   }
 
   public amountHasChanged(): void {
+
     if(isNaN(this.cartItem.amount) || this.cartItem.amount == undefined || this.cartItem.amount < 1 || this.cartItem.amount > 100) {
       this.invalidAmount = true
-      return
+      this.amountChanged.emit({productId: this.cartItem.product.id, amount: 0});
     } else {
       this.invalidAmount = false
+      this.amountChanged.emit({productId: this.cartItem.product.id, amount: this.cartItem.amount});
     }
-
-    let productId = this.cartItem.product.id
-    let amount = this.cartItem.amount
-
-    this.amountChanged.emit({productId, amount});
   }
 
   navigateToProduct() {

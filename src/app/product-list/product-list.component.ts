@@ -5,6 +5,7 @@ import {Direction} from "../models/base/parsed-pagination-token";
 import {NgToastService} from "ng-angular-popup";
 import {CartService} from "../shared/cart.service";
 import {environment} from "../../environments/environment";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'wea5-product-list',
@@ -36,26 +37,39 @@ export class ProductListComponent implements OnInit {
   disablePrevious: boolean = true
   disableNext: boolean = true
 
-  constructor(private productService: ProductService, private cartService: CartService,
-              private toast: NgToastService) { }
+  constructor(private productService: ProductService, private cartService: CartService, private translate: TranslateService,
+              private toast: NgToastService) {
+  }
 
   ngOnInit(): void {
 
   }
 
   searchTriggered($event: string) {
-    if($event.length > 0) {
+    if ($event.length > 0) {
+
+      let emptyTransl: string
+      this.translate.get('toast.soEmpty').subscribe((res: string) => {
+        emptyTransl = res;
+      })
+
+      let nothingFoundTransl: string
+      this.translate.get('toast.noProductsFound').subscribe((res: string) => {
+        nothingFoundTransl = res;
+      })
+
+
       this.productService.findByTextSearch($event, Direction.Forward, undefined, 10).subscribe((res) => {
         this.pagedResult = res
-        if(this.pagedResult.items?.length == 0) {
-          this.toast.error({detail: "So Much Empty", summary:"No Products Found", duration: 5000})
+        if (this.pagedResult.items?.length == 0) {
+          this.toast.error({detail: emptyTransl, summary: nothingFoundTransl, duration: 5000})
         } else {
           this.currentPage = 1
         }
 
         this.searchTerm = $event
 
-        if(this.pagedResult.nextPage != undefined) {
+        if (this.pagedResult.nextPage != undefined) {
           this.disableNext = false
         }
       })
@@ -66,7 +80,7 @@ export class ProductListComponent implements OnInit {
     this.productService.findByTextSearch(this.searchTerm, Direction.Backward, this.pagedResult.previousPage.reference, 10).subscribe((res) => {
       this.pagedResult = res
       this.currentPage--
-      if(this.currentPage == 1) {
+      if (this.currentPage == 1) {
         this.disablePrevious = true
       }
     })
@@ -79,22 +93,36 @@ export class ProductListComponent implements OnInit {
       this.currentPage++
       this.disablePrevious = false
 
-      if(this.pagedResult.nextPage == undefined) {
+      if (this.pagedResult.nextPage == undefined) {
         this.disableNext = false
       }
     })
   }
 
-  addToCart(productId:string) {
-      this.cartService.addToCart(productId).subscribe({
-        next:(res) => {
-          this.toast.success({detail: "Product Added!", summary:"1 piece added", duration: 5000})
-          localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(res));
-        },
-        error:(e) => {
-          this.toast.error({detail: "Uuups", summary:"Something Went Wrong", duration: 5000})
-        }
-      })
-  }
+  addToCart(productId: string) {
+    let addedTransl: string
+    this.translate.get('toast.productAdded').subscribe((res: string) => {
+      addedTransl = res;
+    })
 
+    let pieceTransl: string
+    this.translate.get('toast.pieceAdded').subscribe((res: string) => {
+      pieceTransl = res;
+    })
+
+    let errorTransl: string
+    this.translate.get('toast.somethingWentWrong').subscribe((res: string) => {
+      errorTransl = res;
+    })
+
+    this.cartService.addToCart(productId).subscribe({
+      next: (res) => {
+        this.toast.success({detail: addedTransl, summary: pieceTransl, duration: 5000})
+        localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(res));
+      },
+      error: (e) => {
+        this.toast.error({detail: "Uuups", summary: errorTransl, duration: 5000})
+      }
+    })
+  }
 }

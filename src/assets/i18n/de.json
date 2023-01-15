@@ -13,6 +13,7 @@
   },
   "cart": {
     "coupons": "Gutschein",
+    "itemsInYourCart": "Produkte im Warenkorb",
     "code": "Code",
     "removeCoupon": "Gutschein entfernen",
     "apply": "Anwenden",
@@ -57,6 +58,21 @@
     "pricing": "Preise",
     "FAQs": "FAQs",
     "about": "Über uns"
+  },
+  "toast": {
+    "productAdded": "Produkt hinzugefügt",
+    "pieceAdded": "1 Stück hinzugefügt",
+    "somethingWentWrong": "Es ist etwas schief gelaufen",
+    "cantAddCoupon": "Gutschein kann nicht hinzugefügt werden",
+    "orderSuccessful": "Bestellung erfolgreich abgeschickt!",
+    "youOrderNumber": "Ihre Bestellnummer ist",
+    "invalidCard": "Kreditkarte ist ungültig",
+    "orderNotPlaced": "Bestellung wurde nicht durchgeführt",
+    "inactiveCard": "Kreditkarte ist inaktiv",
+    "insufficientCredit": "Kreditrahmen reicht nicht aus",
+    "noProductsFound": "Keine Produkte gefunden",
+    "soEmpty": "Soo leer"
   }
-
 }
+
+

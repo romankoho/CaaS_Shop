@@ -26,7 +26,7 @@
       </td>
 
       <td class="align-middle w-25">
-        <span class="text-decoration-line-through text-navy"  *ngIf="(cartItem.totalPrice < sum)">{{ sum | currency:'EUR':"symbol" }} </span>
+        <span class="text-decoration-line-through text-navy"  *ngIf="(cartItem.totalPrice < sum )">{{ sum | currency:'EUR':"symbol" }} </span>
         <h4>
           {{ cartItem.totalPrice | currency:'EUR':"symbol" }}
         </h4>

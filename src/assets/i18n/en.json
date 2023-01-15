@@ -13,6 +13,7 @@
   },
   "cart": {
     "coupons": "Coupons",
+    "itemsInYourCart": "Items in your Cart",
     "code": "Code",
     "removeCoupon": "Remove Coupon",
     "apply": "Apply",
@@ -57,6 +58,20 @@
     "pricing": "Pricing",
     "FAQs": "FAQs",
     "about": "About"
+  },
+  "toast": {
+    "productAdded": "Product Added",
+    "pieceAdded": "1 piece Added",
+    "somethingWentWrong": "Something Went Wrong",
+    "cantAddCoupon": "Coupon cannot be added",
+    "orderSuccessful": "Order was successfully placed!",
+    "youOrderNumber": "Your order number is",
+    "invalidCard": "Credit card is invalid",
+    "orderNotPlaced": "Order was not placed",
+    "inactiveCard": "Credit card in inactive",
+    "insufficientCredit": "Insufficient funds",
+    "noProductsFound": "No Products Found",
+    "soEmpty": "So Much Empty"
   }
 }
 

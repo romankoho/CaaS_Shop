@@ -11,6 +11,7 @@ import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
 import {CustomerService} from "../shared/customer.service";
 import {environment} from "../../environments/environment";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'wea5-checkout',
@@ -66,7 +67,8 @@ export class CheckoutComponent implements OnInit {
               private cartService: CartService,
               private customerService: CustomerService,
               private toast: NgToastService,
-              private router: Router,) { }
+              private router: Router,
+              private translate: TranslateService) { }
 
   ngOnInit(): void {
     const data = localStorage.getItem(`${environment.tenantId}.cart`)
@@ -167,11 +169,45 @@ export class CheckoutComponent implements OnInit {
       zipCode: this.checkoutForm.value.zip,
     }
 
+    let orderSuccessfullTransl: string
+    this.translate.get('toast.orderSuccessful').subscribe((res: string) => {
+      orderSuccessfullTransl = res;
+    })
+
+    let orderNumTransl: string
+    this.translate.get('toast.orderSuccessful').subscribe((res: string) => {
+      orderNumTransl = res;
+    })
+
+    let invalidCardTransl: string
+    this.translate.get('toast.invalidCard').subscribe((res: string) => {
+      invalidCardTransl = res;
+    })
+
+    let orderNotPlacedTransl: string
+    this.translate.get('toast.orderNotPlaced').subscribe((res: string) => {
+      orderNotPlacedTransl = res;
+    })
+
+    let inactiveCardTransl: string
+    this.translate.get('toast.inactiveCard').subscribe((res: string) => {
+      inactiveCardTransl = res;
+    })
+
+    let insufficientCreditTransl: string
+    this.translate.get('toast.insufficientCredit').subscribe((res: string) => {
+      insufficientCreditTransl = res;
+    })
+
+    let error: string
+    this.translate.get('toast.somethingWentWrong').subscribe((res: string) => {
+      error = res;
+    })
+
     this.cartService.convertCartToOrder(this.cart.id, address, customer).subscribe({
       next:(res) => {
-        console.log("payment successful")
         this.order = res;
-        this.toast.success({detail: "Order was successfully placed!", summary:`${this.order.orderNumber} is your order number`, sticky:true})
+        this.toast.success({detail: orderSuccessfullTransl, summary:`${this.order.orderNumber} ${orderNumTransl}`, sticky:true})
         localStorage.removeItem(`${environment.tenantId}.cart`)
         this.router.navigateByUrl("/home")
 
@@ -182,19 +218,19 @@ export class CheckoutComponent implements OnInit {
 
         switch(e.error.type) {
           case "payment_invalid_card": {
-            this.toast.error({detail: "Credit card is invalid", summary:"Order was not placed", duration: 10000})
+            this.toast.error({detail: invalidCardTransl, summary: orderNotPlacedTransl, duration: 10000})
             break
           }
           case "payment_inactive_card": {
-            this.toast.error({detail: "This credit card is inactive", summary:"Order was not placed", duration: 10000})
+            this.toast.error({detail: inactiveCardTransl, summary:orderNotPlacedTransl, duration: 10000})
             break
           }
           case "payment_insufficient_credit": {
-            this.toast.error({detail: "There is not enough credit on this card", summary:"Order was not placed", duration: 10000})
+            this.toast.error({detail: insufficientCreditTransl, summary:orderNotPlacedTransl, duration: 10000})
             break
           }
           default: {
-            this.toast.error({detail: "Ooops something went wrong", summary:"Order was not placed", duration: 10000})
+            this.toast.error({detail: error, summary:orderNotPlacedTransl, duration: 10000})
             break
           }
         }

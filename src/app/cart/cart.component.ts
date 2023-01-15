@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Cart} from "../models/cart/cart";
 import {CartService} from "../shared/cart.service";
 import {CartItemForUpdate} from "../models/cart/cart-item-for-update";
 import {Coupon} from "../models/coupon/coupon";
 import {NgToastService} from "ng-angular-popup";
 import {Router} from "@angular/router";
-import {CouponForCartUpdate} from "../models/coupon/coupon-for-cart-update";
 import {environment} from "../../environments/environment";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'wea5-cart',
@@ -18,34 +18,51 @@ import {environment} from "../../environments/environment";
 export class CartComponent implements OnInit {
 
   cart: Cart
+  invalidCart: boolean = false
 
   constructor(private cartService: CartService,
               private router: Router,
-              private toast: NgToastService) { }
+              private toast: NgToastService,
+              private translate: TranslateService) {  }
 
   ngOnInit(): void {
     const data = localStorage.getItem(`${environment.tenantId}.cart`)
 
     if(data) {
       this.cart = JSON.parse(data)
-    } else {
-      this.cart = {
-        basePrice: 0,
-        cartDiscounts: [],
-        concurrencyToken: "",
-        coupons: [],
-        customer: {
-          id: "",
-          shopId: ""
-        },
-        discountValue: 0,
-        id: "",
-        items: [],
-        lastAccess: "",
-        shopId: "",
-        totalPrice: 0
 
-      }
+      //update cart from server
+      this.cartService.getById(this.cart.id).subscribe( {
+        next:(cart) => {
+          this.cart = cart
+          localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
+        },
+        error:(e) => {
+          localStorage.removeItem(`${environment.tenantId}.cart`)
+          this.initializeCart()
+        }
+      })
+    } else {
+     this.initializeCart()
+    }
+  }
+
+  initializeCart(){
+    this.cart = {
+      basePrice: 0,
+      cartDiscounts: [],
+      concurrencyToken: "",
+      coupons: [],
+      customer: {
+        id: "",
+        shopId: ""
+      },
+      discountValue: 0,
+      id: "",
+      items: [],
+      lastAccess: "",
+      shopId: "",
+      totalPrice: 0
     }
   }
 
@@ -63,18 +80,19 @@ export class CartComponent implements OnInit {
     return productCount
   }
 
-
   amountChanged(productId:string, amount:number) {
     let updatedItem:CartItemForUpdate | undefined = this.cart.items!.find(element => element.product?.id == productId)
 
-    if(updatedItem != undefined) {
+    if(updatedItem != undefined && amount > 0) {
       updatedItem.amount = amount
+      this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
+        this.cart = res
+        localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
+        this.invalidCart = false
+      })
+    } else {
+      this.invalidCart = true
     }
-
-    this.cartService.updateCart(this.cart.id, this.cart).subscribe((res) => {
-      this.cart = res
-      localStorage.setItem(`${environment.tenantId}.cart`, JSON.stringify(this.cart));
-    })
   }
 
   removeItem($event: string) {
@@ -102,6 +120,16 @@ export class CartComponent implements OnInit {
       ]
     }
 
+    let error:string
+    this.translate.get('toast.somethingWentWrong').subscribe((res: string) => {
+      error = res;
+    })
+
+    let errorSum: string
+    this.translate.get('toast.cantAddCoupon').subscribe((res: string) => {
+      errorSum = res;
+    })
+
     this.cartService.updateCart(this.cart.id, copyCart).subscribe({
       next:(res) => {
         this.cart = res;
@@ -109,7 +137,7 @@ export class CartComponent implements OnInit {
         this.cart = res
       },
       error: (e) => {
-        this.toast.error({detail: "Ooops something went wrong", summary:"Coupon cannot be added", duration: 5000})
+        this.toast.error({detail: error, summary: errorSum, duration: 5000})
       }
     });
   }
