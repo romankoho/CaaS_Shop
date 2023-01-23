@@ -63,24 +63,49 @@
               </tbody>
             </table>
           </div>
-
         </div>
-
       </div>
+
       <div class="row col-3 p-3 m-3 rounded-3" style="background-color: #f0f0f3">
-        <div>
-          <div>
+
+        <div class="container">
+          <div class="row">
             <h5>{{'cart.cartSummary' | translate}}</h5>
           </div>
-          <div>
-            <span>{{'cart.total' | translate}}</span>
-            <h2 class="font-bold">
-              {{cart.totalPrice | currency:'EUR':"symbol"}}
-            </h2>
 
+          <div class="row">
+            <div class="col-6">{{'cart.cartSum' | translate}}</div>
+            <div class="col-6 justify-content-end">
+              <h2 class="font-bold text-end">
+                {{cart.basePrice | currency:'EUR':"symbol"}}
+              </h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">{{'cart.cartDiscounts' | translate}}</div>
+            <div class="col-6 justify-content-end">
+              <h2 class="font-bold text-end">
+                - {{cart.discountValue | currency:'EUR':"symbol"}}
+              </h2>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-6">{{'cart.total' | translate}}</div>
+            <div class="col-6 justify-content-end">
+              <h2 class="font-bold text-end text-navy">
+                {{cart.totalPrice | currency:'EUR':"symbol"}}
+              </h2>
+            </div>
+          </div>
+
+          <div>
             <hr>
             <div class="m-t-sm">
-              <div class="btn-group">
+              <div class="btn-group row">
                 <button [disabled]="invalidCart" (click)="navigateToCheckout()" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> {{'cart.checkout' | translate}}</button>
               </div>
             </div>

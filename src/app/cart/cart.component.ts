@@ -44,6 +44,7 @@ export class CartComponent implements OnInit {
       })
     } else {
      this.initializeCart()
+      this.invalidCart = true
     }
   }
 
@@ -64,6 +65,7 @@ export class CartComponent implements OnInit {
       shopId: "",
       totalPrice: 0
     }
+
   }
 
   public getItemsCount(): number {

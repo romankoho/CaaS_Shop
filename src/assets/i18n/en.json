@@ -19,6 +19,8 @@
     "apply": "Apply",
     "checkout": "Checkout",
     "cartSummary": "Cart Summary",
+    "cartSum": "Sum",
+    "cartDiscounts": "Discounts",
     "total": "Total"
   },
   "cartItem": {

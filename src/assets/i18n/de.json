@@ -19,6 +19,8 @@
     "apply": "Anwenden",
     "checkout": "zum Checkout",
     "cartSummary": "Warenkorb Zusammenfassung",
+    "cartSum": "Summe",
+    "cartDiscounts": "Gutschriften",
     "total": "Gesamt"
   },
   "cartItem": {
